@@ -3,366 +3,1472 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>무역 전문가 포트폴리오</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Deep Blue & Sky Blue with Orange accents -->
-    <!-- Application Structure Plan: A single-page scrolling application with a fixed left navigation sidebar for seamless exploration. This structure transforms the linear slide deck into a dynamic, narrative-driven portfolio. Sections include: Home (Introduction), Core Competencies (Interactive Cards), Key Experiences (Case Study Format), Professional Development (Structured Lists), and Career Path (AS-IS/TO-BE Text), allowing recruiters to either follow the story or jump directly to sections of interest, enhancing usability and engagement. -->
-    <!-- Visualization & Content Choices: Report Info -> Goal -> Viz/Presentation Method -> Interaction -> Justification. 1. Core Competencies -> Demonstrate skills -> Interactive Cards with Unicode icons -> On-click reveal of details -> Engages user to explore strengths with visual cues. 2. GTEP Project -> Showcase problem-solving -> Problem-Solution-Result Layout with Unicode icons -> Clear narrative structure -> Highlights tangible outcomes with visual clarity. 3. Professional Development -> Highlight learning -> Structured Lists with Unicode icons -> Quick overview of qualifications. 4. Career Path -> Visualize ambition -> AS-IS/TO-BE Text -> Clear and detailed -> Presents growth plan professionally. This approach avoids static text and uses interaction and subtle visuals to tell a compelling story. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <title>방영황 - 무역 전문가 포트폴리오</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: #f8f9fa;
+            font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(30, 58, 138, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            height: 70px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
         .nav-link {
-            transition: color 0.3s, border-left-color 0.3s, padding-left 0.2s;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
         }
-        .nav-link.active, .nav-link:hover {
-            color: #f97316;
-            border-left-color: #f97316;
-            padding-left: 1.5rem; /* Hover effect */
+
+        .nav-link:hover {
+            color: #0ea5e9;
         }
-        .section-card {
-            transition: transform 0.3s, box-shadow 0.3s;
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #0ea5e9;
+            transition: width 0.3s ease;
         }
-        .section-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+        .nav-link:hover::after {
+            width: 100%;
         }
-        .competency-card .details {
-            max-height: 0;
+
+        /* Sections */
+        .section {
+            min-height: 100vh;
+            padding: 100px 20px 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #0ea5e9 100%);
+            color: white;
+            text-align: center;
+            position: relative;
             overflow: hidden;
-            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
         }
-        .competency-card.open .details {
-            max-height: 500px; /* 충분한 높이 확보 */
-            padding-top: 1rem;
-            padding-bottom: 1rem;
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.03)" points="0,0 1000,300 1000,1000 0,700"/></svg>');
+            background-size: cover;
         }
-        .competency-card.open .arrow {
-            transform: rotate(180deg);
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
         }
-        .arrow {
-            transition: transform 0.3s;
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out;
         }
-        /* Mobile responsive adjustments for sidebar */
-        @media (max-width: 767px) {
-            #header {
-                width: 100%;
-                height: auto;
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                background-color: #ffffff;
-                z-index: 1000;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            font-weight: 300;
+            line-height: 1.4;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-slogan {
+            background: rgba(255,255,255,0.15);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 40px;
+            font-size: 1.3rem;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .hero-contact {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .contact-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 25px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.25);
+        }
+
+        .hero-icon {
+            font-size: 6rem;
+            margin: 40px 0;
+            opacity: 0.8;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
             }
-            #header .nav-menu {
-                display: none;
-                flex-direction: column;
-                padding: 1rem 0;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
-            #header .nav-menu.open {
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            font-size: 1.3rem;
+            color: #64748b;
+            font-weight: 300;
+        }
+
+        /* Competencies Section */
+        .competencies {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .competencies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .competency-card {
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .competency-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #f97316, #3b82f6, #10b981);
+        }
+
+        .competency-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(30, 58, 138, 0.2);
+        }
+
+        .competency-icon {
+            font-size: 4rem;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .competency-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 20px;
+        }
+
+        .competency-description {
+            color: #64748b;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .competency-experience {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            font-weight: 500;
+        }
+
+        /* Problem Solving Section */
+        .problem-solving {
+            background: white;
+        }
+
+        .process-flow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .process-step {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            position: relative;
+            border: 2px solid;
+            transition: transform 0.3s ease;
+        }
+
+        .process-step:hover {
+            transform: translateY(-10px);
+        }
+
+        .process-step.problem {
+            border-color: #ef4444;
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        }
+
+        .process-step.solution {
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        }
+
+        .process-step.result {
+            border-color: #10b981;
+            background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #1e3a8a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            margin: 20px 0;
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+
+        .step-content {
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .step-content ul {
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .step-content li {
+            margin-bottom: 8px;
+        }
+
+        /* Collaboration Section */
+        .collaboration {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+        }
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .experience-card {
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, #64748b, #1e3a8a);
+        }
+
+        .experience-card.highlight::before {
+            background: linear-gradient(180deg, #f97316, #ea580c);
+        }
+
+        .experience-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .experience-details {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .detail-item {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .detail-text {
+            color: #4b5563;
+            line-height: 1.5;
+        }
+
+        .detail-text strong {
+            color: #1e3a8a;
+        }
+
+        /* Expertise Section */
+        .expertise {
+            background: white;
+        }
+
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 50px;
+            margin-top: 50px;
+        }
+
+        .expertise-category {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 25px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .expertise-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+        }
+
+        .expertise-category.professional::before {
+            background: linear-gradient(90deg, #f97316, #ea580c);
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .subject-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .subject-item {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .subject-item:hover {
+            transform: translateX(10px);
+        }
+
+        .subject-name {
+            font-weight: bold;
+            color: #1e3a8a;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .subject-description {
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        /* Vision Section */
+        .vision {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+        }
+
+        .vision-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .current-state {
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            padding: 40px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .state-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .current-skills {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .skill-item {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .skill-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .roadmap {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .roadmap-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 35px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .roadmap-item:hover {
+            transform: translateX(15px);
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: white;
+        }
+
+        .roadmap-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .roadmap-content {
+            line-height: 1.6;
+        }
+
+        .roadmap-content ul {
+            margin-top: 10px;
+        }
+
+        .roadmap-content li {
+            margin-bottom: 8px;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            text-align: center;
+        }
+
+        .contact-content {
+            background: white;
+            border-radius: 30px;
+            padding: 60px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6, #0ea5e9);
+        }
+
+        .closing-icon {
+            font-size: 5rem;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+
+        .closing-title {
+            font-size: 3rem;
+            color: #1e3a8a;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .closing-message {
+            font-size: 1.3rem;
+            color: #4b5563;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .final-contact {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .final-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            z-index: 999;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #f97316, #3b82f6);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        /* Animations on Scroll */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Mobile Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: 0.3s;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hamburger {
                 display: flex;
             }
-            #header .nav-link {
-                border-left: none;
-                border-bottom: 2px solid transparent;
-                padding: 0.5rem 1rem;
-                text-align: center;
+
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(30, 58, 138, 0.98);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: left 0.3s ease;
             }
-            #header .nav-link.active, #header .nav-link:hover {
-                border-left-color: transparent;
-                border-bottom-color: #f97316;
-                padding-left: 1rem; /* 모바일에서는 패딩 변경 효과 제거 */
+
+            .nav-menu.active {
+                left: 0;
             }
-            main, footer {
-                margin-left: 0;
-                padding-top: 60px;
+
+            .nav-link {
+                font-size: 1.5rem;
+                padding: 20px;
             }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+
+            .hero-contact {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .competencies-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .process-flow {
+                grid-template-columns: 1fr;
+            }
+
+            .experience-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .expertise-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .vision-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .contact-content {
+                padding: 40px 30px;
+            }
+
+            .final-contact {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(30, 58, 138, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(30, 58, 138, 0.6);
+        }
+
+        .back-to-top.visible {
+            display: flex;
+        }
+
+        /* Special Effects */
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float-shape 20s infinite linear;
+        }
+
+        .shape:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            font-size: 3rem;
+            animation-delay: -5s;
+        }
+
+        .shape:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            font-size: 2rem;
+            animation-delay: -10s;
+        }
+
+        .shape:nth-child(3) {
+            bottom: 30%;
+            left: 20%;
+            font-size: 2.5rem;
+            animation-delay: -15s;
+        }
+
+        @keyframes float-shape {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0px) rotate(360deg); }
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800">
-
-    <header id="header" class="bg-white/80 backdrop-blur-md shadow-md fixed h-full w-64 top-0 left-0 z-50 transition-all duration-300 hidden md:block">
-        <nav class="container mx-auto px-6 py-6 flex flex-col justify-between items-center h-full">
-            <div class="text-3xl font-black text-slate-800 mb-8">
-                <a href="#home">PORTFOLIO</a>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="logo">방영황 Portfolio</a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#hero" class="nav-link">홈</a></li>
+                <li><a href="#competencies" class="nav-link">핵심역량</a></li>
+                <li><a href="#problem-solving" class="nav-link">문제해결</a></li>
+                <li><a href="#collaboration" class="nav-link">협업경험</a></li>
+                <li><a href="#expertise" class="nav-link">전문성</a></li>
+                <li><a href="#vision" class="nav-link">비전</a></li>
+                <li><a href="#contact" class="nav-link">연락처</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-            <div class="flex flex-col space-y-4 w-full">
-                <a href="#competencies" class="nav-link text-slate-600 font-bold border-l-2 border-transparent pl-4 py-2">핵심 역량</a>
-                <a href="#experience" class="nav-link text-slate-600 font-bold border-l-2 border-transparent pl-4 py-2">주요 경험</a>
-                <a href="#development" class="nav-link text-slate-600 font-bold border-l-2 border-transparent pl-4 py-2">전문성 강화</a>
-                <a href="#career" class="nav-link text-slate-600 font-bold border-l-2 border-transparent pl-4 py-2">입사 후 포부</a>
-            </div>
-            <div class="mt-auto text-center text-slate-500 text-sm">
-                <p>&copy; 2025 [이름]</p>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Mobile Header & Menu Toggle -->
-    <header class="md:hidden bg-white/80 backdrop-blur-md shadow-md fixed w-full top-0 z-50 transition-all duration-300">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="text-2xl font-black text-slate-800">
-                <a href="#home">PORTFOLIO</a>
-            </div>
-            <button id="mobile-menu-toggle" class="text-slate-600 focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-            </button>
         </div>
-        <nav id="mobile-nav-menu" class="nav-menu bg-white border-t border-slate-200">
-            <a href="#competencies" class="nav-link block text-slate-600 font-bold border-b-2 border-transparent py-2 hover:text-orange-500">핵심 역량</a>
-            <a href="#experience" class="nav-link block text-slate-600 font-bold border-b-2 border-transparent py-2 hover:text-orange-500">주요 경험</a>
-            <a href="#development" class="nav-link block text-slate-600 font-bold border-b-2 border-transparent py-2 hover:text-orange-500">전문성 강화</a>
-            <a href="#career" class="nav-link block text-slate-600 font-bold border-b-2 border-transparent py-2 hover:text-orange-500">입사 후 포부</a>
-        </nav>
-    </header>
+    </nav>
 
+    <!-- Scroll Progress -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
 
-    <main class="ml-0 md:ml-64 transition-all duration-300">
-        <section id="home" class="min-h-screen flex items-center bg-cover bg-center" style="background-image: url('https://placehold.co/1920x1080/0f172a/e0f2fe?text=Global+Shipping+Container+Network');">
-            <div class="bg-black/50 w-full h-full absolute"></div>
-            <div class="container mx-auto px-6 text-center relative z-10">
-                <h1 class="text-4xl md:text-6xl font-black text-white leading-tight mb-4">
-                    무역 전문가 [이름]: 강점과 성장 스토리
-                </h1>
-                <p class="text-xl md:text-2xl font-bold text-orange-400 mb-8">
-                    "꼼꼼함과 소통으로 해운 무역의 가치를 높이는 [이름]입니다."
-                </p>
-                <div class="text-white text-lg">
-                    <p>무역 실무 지식 | 문제 해결 능력 | 효율적 소통 및 협업 역량</p>
-                    <p class="mt-2">Email: your.email@example.com | Phone: 010-1234-5678</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="competencies" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-black text-center mb-2">해운 무역 전문가의 3가지 핵심 역량</h2>
-                <p class="text-center text-slate-600 mb-12">저의 무역 직무 역량은 세 가지 핵심 기둥 위에 세워져 있습니다.</p>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="competency-card bg-slate-50 rounded-lg p-6 shadow-sm cursor-pointer border border-slate-200 hover:shadow-xl hover:border-orange-400 transition-all duration-300">
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center">
-                                <span class="text-3xl mr-3 text-orange-500">🔍⚙️</span>
-                                <h3 class="text-xl font-bold">꼼꼼한 문제 해결 능력</h3>
-                            </div>
-                            <div class="arrow text-2xl text-slate-500">▼</div>
-                        </div>
-                        <div class="details">
-                            <p class="text-slate-600 mt-4">
-                                **경험**: 전북창조경제혁신센터 현장실습 'IR 발표 서포트'
-                            </p>
-                            <p class="text-slate-600 mt-2">
-                                **핵심**: 발표자 정보 파악 및 발표 순서 상기 등 철저한 사전 준비로 IR 발표를 성공적으로 지원하며, 예상치 못한 변수에 효과적으로 대응했습니다.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="competency-card bg-slate-50 rounded-lg p-6 shadow-sm cursor-pointer border border-slate-200 hover:shadow-xl hover:border-orange-400 transition-all duration-300">
-                         <div class="flex justify-between items-center">
-                            <div class="flex items-center">
-                                <span class="text-3xl mr-3 text-orange-500">🤝💬</span>
-                                <h3 class="text-xl font-bold">효율적 소통 및 협업 능력</h3>
-                            </div>
-                            <div class="arrow text-2xl text-slate-500">▼</div>
-                        </div>
-                        <div class="details">
-                            <p class="text-slate-600 mt-4">
-                                **경험**: 2018 청년이 잇는 트래블메이커 1기 '총무' 활동
-                            </p>
-                            <p class="text-slate-600 mt-2">
-                                **핵심**: 코스 분할 및 월 2회 이상 소통으로 시간/예산을 절약하고 팀워크를 극대화하여 '우수팀'으로 선정되는 성과를 이끌었습니다.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="competency-card bg-slate-50 rounded-lg p-6 shadow-sm cursor-pointer border border-slate-200 hover:shadow-xl hover:border-orange-400 transition-all duration-300">
-                         <div class="flex justify-between items-center">
-                            <div class="flex items-center">
-                                <span class="text-3xl mr-3 text-orange-500">📚🌐</span>
-                                <h3 class="text-xl font-bold">무역 실무 지식</h3>
-                            </div>
-                            <div class="arrow text-2xl text-slate-500">▼</div>
-                        </div>
-                        <div class="details">
-                            <p class="text-slate-600 mt-4">
-                                **경험**: 전북대학교 GTEP 11기 활동
-                            </p>
-                            <p class="text-slate-600 mt-2">
-                                **핵심**: 해외 시장 조사, 수출입 박람회 참여 등 실무 경험을 쌓고, '무역구제경연대회'에서 우수상을 수상하며 이론과 실무 역량을 증명했습니다.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="experience" class="py-20 bg-slate-100">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-black text-center mb-12">주요 경험: 문제 해결 사례</h2>
-                <div class="bg-white rounded-lg shadow-lg p-8 md:p-12 section-card">
-                    <h3 class="text-2xl font-bold mb-2">GTEP 무역구제경연대회 우수상 수상</h3>
-                    <p class="text-slate-600 mb-8">예상치 못한 문제에 직면했을 때, 능동적으로 해결하며 성공적인 결과를 이끌어낸 경험입니다.</p>
-                    <div class="grid md:grid-cols-3 gap-8 text-center">
-                        <div class="border-r border-slate-200 pr-8">
-                            <h4 class="text-xl font-bold text-red-500 mb-4">Problem ⚠️</h4>
-                            <p>주요 배역 학생들의 잦은 불참으로 연습 진도가 나가지 않고, 팀원들의 불만이 고조되는 위기 상황에 직면했습니다.</p>
-                        </div>
-                        <div class="border-r border-slate-200 pr-8">
-                            <h4 class="text-xl font-bold text-blue-500 mb-4">Solution ✅</h4>
-                            <p>1:1 소통으로 불참 원인을 파악하고, 모두가 참여 가능한 새로운 연습 시간을 제안했습니다. 또한, 팀을 분할하여 연습 효율을 높이고, 불참자 대역을 자처하며 공백을 최소화했습니다.</p>
-                        </div>
-                        <div>
-                            <h4 class="text-xl font-bold text-green-500 mb-4">Result 🏆</h4>
-                            <p>팀원들의 참여율과 팀워크를 극대화하여 최종적으로 '무역구제경연대회'에서 **우수상**을 수상하는 쾌거를 이루었습니다.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="development" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-black text-center mb-12">전문성 강화 노력</h2>
-                <div class="grid md:grid-cols-2 gap-12">
-                    <div class="section-card bg-slate-50 p-8 rounded-lg border">
-                        <h3 class="text-2xl font-bold mb-6">🎓 무역 관련 전공 교육</h3>
-                        <ul class="space-y-3 text-slate-700">
-                            <li><span class="font-bold text-orange-600">▪</span> 무역상무론: 무역 실무 기초, 수출입 프로세스, 법규 이해</li>
-                            <li><span class="font-bold text-orange-600">▪</span> 국제경영학: 글로벌 경영 환경 및 전략 분석</li>
-                            <li><span class="font-bold text-orange-600">▪</span> 국제운송/물류론: 국제 운송 및 물류 전략, 법규 이해</li>
-                            <li><span class="font-bold text-orange-600">▪</span> FTA 실무연습: FTA 사례 분석 및 대응 전략</li>
-                            <li><span class="font-bold text-orange-600">▪</span> 계량분석론: SPSS 활용 국제경제 통계 분석</li>
-                        </ul>
-                    </div>
-                    <div class="section-card bg-slate-50 p-8 rounded-lg border">
-                        <h3 class="text-2xl font-bold mb-6">📈 직무 역량 강화 교육</h3>
-                        <ul class="space-y-3 text-slate-700">
-                            <li><span class="font-bold text-orange-600">▪</span> 국가공인 SMAT 모듈 A, B: 비즈니스 커뮤니케이션, 서비스 마케팅</li>
-                            <li><span class="font-bold text-orange-600">▪</span> 국제 IT 자격 ICDL Digital Marketing: 온라인 마케팅, SNS 채널 활용</li>
-                            <li><span class="font-bold text-orange-600">▪</span> Action Learning 프로젝트: 팀 단위 과제 해결 방법론 학습</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="career" class="py-20 bg-slate-100">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-black text-center mb-2">입사 후 포부</h2>
-                <p class="text-center text-slate-600 mb-12">해운 산업과 함께 성장하며, 다음과 같은 구체적인 비전을 실현하겠습니다.</p>
-                <div class="bg-white rounded-lg shadow-lg p-8 md:p-12 section-card grid md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-2xl font-bold text-blue-600 mb-4">AS-IS (현재)</h3>
-                        <ul class="space-y-3 text-slate-700">
-                            <li><span class="font-bold text-blue-500">▪</span> 무역 실무 지식 및 수출입 프로세스 이해</li>
-                            <li><span class="font-bold text-blue-500">▪</span> 데이터 기반 문제 해결 및 협업 역량</li>
-                            <li><span class="font-bold text-blue-500">▪</span> 디지털 마케팅 이해를 통한 해외 시장 분석 능력</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-bold text-orange-600 mb-4">TO-BE (미래)</h3>
-                        <div class="space-y-6">
-                            <div>
-                                <h4 class="text-xl font-semibold mb-2 text-orange-500">단기 (입사 후 1년)</h4>
-                                <ul class="list-disc list-inside space-y-1 text-slate-700">
-                                    <li>회사 업무 시스템 및 해운 무역 프로세스 완벽 숙지</li>
-                                    <li>주어진 업무를 빠르게 습득하고 팀에 기여</li>
-                                    <li>주요 거래처 및 시장에 대한 이해 심화</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 class="text-xl font-semibold mb-2 text-orange-500">중기 (입사 후 3년)</h4>
-                                <ul class="list-disc list-inside space-y-1 text-slate-700">
-                                    <li>데이터 분석 역량을 활용하여 효율적인 물류 및 운송 경로 최적화 제안</li>
-                                    <li>신규 해외 시장 발굴 및 계약 협상 지원</li>
-                                    <li>팀 내 핵심 인력으로 성장하여 주도적인 프로젝트 수행</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 class="text-xl font-semibold mb-2 text-orange-500">장기 (입사 후 5년)</h4>
-                                <ul class="list-disc list-inside space-y-1 text-slate-700">
-                                    <li>해운 산업의 디지털 전환을 이끄는 무역 전문가</li>
-                                    <li>글로벌 공급망 관리 및 리스크 예측 전문가로 성장</li>
-                                    <li>글로벌 시장을 선도하는 데 기여</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-slate-800 text-white py-8 ml-0 md:ml-64 transition-all duration-300">
-        <div class="container mx-auto px-6 text-center">
-            <p class="font-bold text-lg">CONTACT ME</p>
-            <p class="mt-2">Email: your.email@example.com | Phone: 010-1234-5678</p>
-            <p class="text-sm text-slate-400 mt-4">&copy; 2025 [이름]. All Rights Reserved.</p>
+    <!-- Hero Section -->
+    <section id="hero" class="section hero">
+        <div class="floating-shapes">
+            <div class="shape">🚢</div>
+            <div class="shape">⚓</div>
+            <div class="shape">🌊</div>
         </div>
-    </footer>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">방영황</h1>
+                <p class="hero-subtitle">해운 무역 전문가</p>
+                
+                <div class="hero-slogan">
+                    <strong>꼼꼼함</strong>과 <strong>소통</strong>으로<br>
+                    해운 무역의 가치를 높이겠습니다
+                </div>
+
+                <div class="hero-icon">🚢</div>
+
+                <div class="hero-contact">
+                    <div class="contact-item">
+                        <span>📧</span>
+                        <span>bang125@naver.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📱</span>
+                        <span>010-2587-3528</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>🏢</span>
+                        <span>글로비스 지원</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Competencies Section -->
+    <section id="competencies" class="section competencies">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">해운 무역 전문가의 3가지 핵심 역량</h2>
+                <p class="section-subtitle">체계적인 경험을 통해 검증된 실무 역량</p>
+            </div>
+
+            <div class="competencies-grid">
+                <div class="competency-card fade-in">
+                    <div class="competency-icon">🔍</div>
+                    <h3 class="competency-title">꼼꼼한 문제 해결 능력</h3>
+                    <p class="competency-description">
+                        이론과 실무를 겸비한 전문적인 무역 지식을 보유합니다.
+                    </p>
+                    <div class="competency-experience">
+                        전북대학교 GTEP 11기<br>
+                        <strong>무역구제경연대회 우수상</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Solving Section -->
+    <section id="problem-solving" class="section problem-solving">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">문제 해결 과정을 통한 무역 실무 역량 증명</h2>
+                <p class="section-subtitle">GTEP 무역구제경연대회 우수상 수상 과정</p>
+            </div>
+
+            <div class="process-flow">
+                <div class="process-step problem slide-in-left">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">⚠️</div>
+                    <h3 class="step-title">문제 상황</h3>
+                    <div class="step-content">
+                        <p><strong>주요 배역 학생들의 잦은 불참</strong>으로 연습 진도에 어려움이 발생했습니다.</p>
+                        <ul>
+                            <li>팀원 불만 고조</li>
+                            <li>연습 일정 지연</li>
+                            <li>팀워크 저하</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="process-step solution fade-in">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">💡</div>
+                    <h3 class="step-title">해결 과정</h3>
+                    <div class="step-content">
+                        <ul>
+                            <li><strong>1:1 소통</strong>으로 불참 원인 파악</li>
+                            <li>참여 가능한 <strong>새로운 연습 시간 제안</strong></li>
+                            <li><strong>팀 분할 운영</strong> 방안 팀장에게 제시</li>
+                            <li><strong>대역 자처</strong>로 공백 최소화</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="process-step result slide-in-right">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">🏆</div>
+                    <h3 class="step-title">성과</h3>
+                    <div class="step-content">
+                        <ul>
+                            <li><strong>팀원 참여율 향상</strong></li>
+                            <li><strong>팀워크 강화</strong></li>
+                            <li><strong>무역구제경연대회 우수상 수상</strong></li>
+                        </ul>
+                        <p style="margin-top: 15px; font-weight: bold; color: #10b981;">능동적 문제 해결의 성공 사례</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collaboration Section -->
+    <section id="collaboration" class="section collaboration">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">협업과 책임감: 팀 목표 달성을 위한 효율적 소통</h2>
+                <p class="section-subtitle">두 가지 경험을 통해 배운 리더십과 협업의 가치</p>
+            </div>
+
+            <div class="experience-grid">
+                <div class="experience-card slide-in-left">
+                    <h3 class="experience-title">
+                        <span>🎯</span>
+                        꼼꼼한 책임감의 중요성
+                    </h3>
+                    
+                    <div class="experience-details">
+                        <div class="detail-item">
+                            <div class="detail-label">활동</div>
+                            <div class="detail-text">상과대학 토론동아리 새우기 (부기장-부회장)</div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-label">문제 상황</div>
+                            <div class="detail-text">1학년 회장에게 동아리 활동보고서 발표를 위임했으나, 준비 부족으로 최하점을 받아 동아리 방 유지 실패</div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-label">배운 교훈</div>
+                            <div class="detail-text"><strong>'돌다리도 두들겨 보고 건너는 꼼꼼함'</strong>과 리더로서의 <strong>책임감</strong>의 중요성을 깨달음</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="experience-card highlight slide-in-right">
+                    <h3 class="experience-title">
+                        <span>🚀</span>
+                        효율적 자원 운영 및 팀워크
+                    </h3>
+                    
+                    <div class="experience-details">
+                        <div class="detail-item">
+                            <div class="detail-label">활동</div>
+                            <div class="detail-text">2018 청년이 잇는 트래블메이커 1기 (총무)</div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-label">나의 기여</div>
+                            <div class="detail-text">
+                                • 1박2일 코스를 <strong>2개로 분할</strong>하여 하루 만에 평가 완료<br>
+                                • 팀원 정보를 바탕으로 <strong>최적의 팀원 배치</strong><br>
+                                • <strong>월 2회 이상 팀 미팅</strong>으로 소통 강화
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-label">성과</div>
+                            <div class="detail-text">시간·예산 절약, 원활한 소통으로 과업 수행 보고 발표에서 뛰어난 기량 발휘, 최종 <strong>'우수 팀' 선정</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expertise Section -->
+    <section id="expertise" class="section expertise">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">해운 무역 전문가를 향한 나의 전문성</h2>
+                <p class="section-subtitle">체계적인 이론 학습과 실무 역량의 균형잡힌 발전</p>
+            </div>
+
+            <div class="expertise-grid">
+                <div class="expertise-category slide-in-left">
+                    <h3 class="category-title">
+                        <span>📖</span>
+                        무역 관련 전공 교육
+                    </h3>
+                    
+                    <div class="subject-grid">
+                        <div class="subject-item">
+                            <h4 class="subject-name">무역상무론</h4>
+                            <p class="subject-description">무역실무 기초, 수출입 실무, 무역관련 법규 및 제도 이해</p>
+                        </div>
+                        
+                        <div class="subject-item">
+                            <h4 class="subject-name">국제경영학</h4>
+                            <p class="subject-description">글로벌 경영 환경, 글로벌 전략, 한국 기업의 글로벌 전략 분석</p>
+                        </div>
+                        
+                        <div class="subject-item">
+                            <h4 class="subject-name">국제운송보험론/국제물류운송론</h4>
+                            <p class="subject-description">국제 운송 및 물류 전략, 국제 법규 이해</p>
+                        </div>
+                        
+                        <div class="subject-item">
+                            <h4 class="subject-name">FTA 실무연습</h4>
+                            <p class="subject-description">중국과의 무역 사례 분석 및 한국의 대응 전략</p>
+                        </div>
+                        
+                        <div class="subject-item">
+                            <h4 class="subject-name">국제마케팅 & 계량분석론</h4>
+                            <p class="subject-description">국제 마케팅 전략 및 SPSS 활용 국제경제 통계 분석 능력</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="expertise-category professional slide-in-right">
+                    <h3 class="category-title">
+                        <span>🎯</span>
+                        직무 역량 강화 교육 및 자격
+                    </h3>
+                    
+                    <div class="subject-grid">
+                        <div class="subject-item">
+                            <h4 class="subject-name">국가공인 SMAT 모듈 A, B</h4>
+                            <p class="subject-description">비즈니스 커뮤니케이션, 서비스 마케팅/세일즈, 고객관계관리, 컴플레인 처리</p>
+                        </div>
+                        
+                        <div class="subject-item">
+                            <h4 class="subject-name">국제 IT 자격 ICDL Digital Marketing</h4>
+                            <p class="subject-description">온라인 마케팅 기본 지식, SNS 채널 활용, 구글/페이스북 광고 실무</p>
+                        </div>
+                        
+                        <div class="subject-item">
+                            <h4 class="subject-name">Action Learning 자기계발 프로젝트</h4>
+                            <p class="subject-description">팀 단위 과제 해결책 도출 방법 학습</p>
+                        </div>
+                        
+                        <div class="subject-item">
+                            <h4 class="subject-name">데이터 분석 역량</h4>
+                            <p class="subject-description">SPSS를 활용한 통계 분석 및 데이터 기반 의사결정 능력</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section id="vision" class="section vision">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title" style="color: white;">입사 후 포부: 글로비스와 함께 성장하는 방영황</h2>
+                <p class="section-subtitle" style="color: rgba(255,255,255,0.8);">단기-중기-장기 성장 로드맵</p>
+            </div>
+
+            <div class="vision-container">
+                <div class="current-state slide-in-left">
+                    <h3 class="state-title">
+                        <span>📍</span>
+                        현재 역량 (As-Is)
+                    </h3>
+                    
+                    <div class="current-skills">
+                        <div class="skill-item">
+                            <div class="skill-name">무역 실무 지식</div>
+                            <div>수출입 프로세스 완벽 이해</div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-name">데이터 기반 문제 해결</div>
+                            <div>협업 역량 및 분석 능력</div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-name">디지털 마케팅 이해</div>
+                            <div>해외 시장 분석 능력</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="roadmap slide-in-right">
+                    <h3 class="state-title">
+                        <span>🚀</span>
+                        미래 성장 계획 (To-Be)
+                    </h3>
+                    
+                    <div class="roadmap-item">
+                        <h4 class="roadmap-title">
+                            <span>🎯</span>
+                            단기 (입사 후 1년)
+                        </h4>
+                        <div class="roadmap-content">
+                            <ul>
+                                <li>회사 업무 시스템 및 해운 무역 프로세스 완벽 숙지</li>
+                                <li>주어진 업무를 빠르게 습득하고 팀에 기여</li>
+                                <li>글로비스의 주요 거래처 및 시장에 대한 이해 심화</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="roadmap-item">
+                        <h4 class="roadmap-title">
+                            <span>📈</span>
+                            중기 (입사 후 3년)
+                        </h4>
+                        <div class="roadmap-content">
+                            <ul>
+                                <li>데이터 분석을 활용한 물류·운송 경로 최적화 제안</li>
+                                <li>신규 해외 시장 발굴 및 계약 협상 지원</li>
+                                <li>팀 내 핵심 인력으로 주도적 프로젝트 수행</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="roadmap-item">
+                        <h4 class="roadmap-title">
+                            <span>🌟</span>
+                            장기 (입사 후 5년)
+                        </h4>
+                        <div class="roadmap-content">
+                            <ul>
+                                <li>해운 산업의 디지털 전환을 이끄는 무역 전문가</li>
+                                <li>글로벌 공급망 관리 및 리스크 예측 전문가</li>
+                                <li>글로비스가 글로벌 시장을 선도하는 데 기여</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="contact-content fade-in">
+                <div class="closing-icon">🙏</div>
+                <h2 class="closing-title">경청해주셔서 감사합니다</h2>
+                
+                <div class="closing-message">
+                    이 포트폴리오를 통해 저의 잠재력과 무역 직무에 대한 열정을 보여드릴 수 있었기를 바랍니다.<br><br>
+                    <strong>저의 역량과 열정이 글로비스의 성장에 크게 기여할 것이라고 확신합니다.</strong><br><br>
+                    혹시 더 궁금하신 점이나 추가로 설명이 필요한 부분이 있다면 편하게 질문해주세요.
+                </div>
+
+                <div class="final-contact">
+                    <div class="final-contact-item">
+                        <span>👤</span>
+                        <span><strong>방영황</strong></span>
+                    </div>
+                    <div class="final-contact-item">
+                        <span>📧</span>
+                        <span>bang125@naver.com</span>
+                    </div>
+                    <div class="final-contact-item">
+                        <span>📱</span>
+                        <span>010-2587-3528</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px; font-style: italic; color: #64748b;">
+                    "Quality & Communication for Global Trade Excellence"
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">
+        ↑
+    </button>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                    const mobileNavMenu = document.getElementById('mobile-nav-menu');
-                    if (mobileNavMenu && mobileNavMenu.classList.contains('open')) {
-                        mobileNavMenu.classList.remove('open');
-                    }
-                });
-            });
-
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-link');
-            const mobileHeader = document.querySelector('header.md\\:hidden');
-            let headerHeight = 0;
-            if (mobileHeader) {
-                headerHeight = mobileHeader.offsetHeight;
-            }
-
-            window.onscroll = () => {
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - (window.innerWidth < 768 ? headerHeight : 0);
-                    if (pageYOffset >= sectionTop - 60) {
-                        current = section.getAttribute('id');
-                    }
-                });
-
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href').includes(current)) {
-                        link.classList.add('active');
-                    }
-                });
-            };
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            const hamburger = document.querySelector('.hamburger');
             
-            const competencyCards = document.querySelectorAll('.competency-card');
-            competencyCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    card.classList.toggle('open');
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                const offsetTop = target.offsetTop - 70;
+
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
                 });
+
+                // Close mobile menu if open
+                const navMenu = document.getElementById('navMenu');
+                const hamburger = document.querySelector('.hamburger');
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
             });
+        });
 
-            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-            const mobileNavMenu = document.getElementById('mobile-nav-menu');
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.offsetHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            
+            scrollProgress.style.width = scrollPercent + '%';
 
-            if (mobileMenuToggle) {
-                mobileMenuToggle.addEventListener('click', () => {
-                    mobileNavMenu.classList.toggle('open');
-                });
+            // Back to top button visibility
+            const backToTop = document.getElementById('backToTop');
+            if (scrollTop > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
             }
         });
+
+        // Back to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animation elements
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Active navigation highlighting
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Navbar background change on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(30, 58, 138, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(30, 58, 138, 0.95)';
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Home') {
+                e.preventDefault();
+                scrollToTop();
+            }
+        });
+
+        // Print optimization
+        window.addEventListener('beforeprint', () => {
+            document.body.style.overflow = 'visible';
+            document.querySelectorAll('section').forEach(section => {
+                section.style.pageBreakAfter = 'always';
+            });
+        });
+
+        // Performance optimization - lazy loading for images
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
     </script>
 </body>
 </html>
+                        철저한 사전 준비와 체계적인 접근으로 문제를 해결합니다.
+                    </p>
+                    <div class="competency-experience">
+                        전북창조경제혁신센터<br>
+                        <strong>IR 발표 서포트 성공</strong>
+                    </div>
+                </div>
+
+                <div class="competency-card fade-in">
+                    <div class="competency-icon">🤝</div>
+                    <h3 class="competency-title">효율적 소통 및 협업</h3>
+                    <p class="competency-description">
+                        적극적인 소통으로 팀의 시너지를 극대화합니다.
+                    </p>
+                    <div class="competency-experience">
+                        청년이 잇는 트래블메이커<br>
+                        <strong>총무로 우수팀 선정</strong>
+                    </div>
+                </div>
+
+                <div class="competency-card fade-in">
+                    <div class="competency-icon">📚</div>
+                    <h3 class="competency-title">무역 실무 지식</h3>
+                    <p class="competency-description">
